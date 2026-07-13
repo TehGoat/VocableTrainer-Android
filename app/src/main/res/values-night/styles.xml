@@ -22,7 +22,7 @@
 
         <!-- The color of the label in all other text field states (such as resting and disabled) -->
         <item name="android:textColorHint">?attr/colorAccent</item>
-        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColor">@color/text_color</item>
 
         <item name="hintTextAppearance">@style/AppTheme.TextFloatLabelAppearance</item>
         <item name="errorTextAppearance">@style/AppTheme.TextErrorAppearance</item>
@@ -37,13 +37,18 @@
 
     <style name="AppTheme.TextFloatLabelAppearance" parent="TextAppearance.Design.Hint">
         <!-- Floating label appearance here -->
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/color_accent</item>
     </style>
 
     <style name="NormalButton" parent="Widget.MaterialComponents.Button">
         <!-- don't do anything additionally, override on night theme -->
-        <item name="android:textColor">@color/textColor</item>
-        <item name="backgroundTint">@color/color_button</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="backgroundTint">@color/elevated_surface</item>
+    </style>
+
+    <style name="LargeButton" parent="NormalButton">
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
     </style>
 
     <style name="BorderlessButton" parent="Widget.MaterialComponents.Button.TextButton">

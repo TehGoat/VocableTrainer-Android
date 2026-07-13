@@ -2,22 +2,25 @@ package vocabletrainer.heinecke.aron.vocabletrainer.trainer
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import vocabletrainer.heinecke.aron.vocabletrainer.R
 import vocabletrainer.heinecke.aron.vocabletrainer.activity.FragmentActivity
-import vocabletrainer.heinecke.aron.vocabletrainer.listpicker.ListPickerFragment
-import vocabletrainer.heinecke.aron.vocabletrainer.trainer.TrainerSettingsFragment.FinishHandler
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.Database
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.EdgeToEdgeUtils.Companion.handleEdgeToEdge
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VList
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.view_model.ListPickerViewModel
+import vocabletrainer.heinecke.aron.vocabletrainer.listpicker.ListPickerFragment
+import vocabletrainer.heinecke.aron.vocabletrainer.trainer.TrainerSettingsFragment.FinishHandler
 
 /**
  * Trainer settings activity
@@ -31,9 +34,8 @@ class TrainerSettingsActivity : FragmentActivity(), FinishHandler,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trainer_settings)
-        listPickerViewModel = ViewModelProviders.of(this).get(
-            ListPickerViewModel::class.java
-        )
+        handleEdgeToEdge(findViewById(R.id.main_content))
+        listPickerViewModel = ViewModelProvider(this)[ListPickerViewModel::class.java]
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -81,7 +83,7 @@ class TrainerSettingsActivity : FragmentActivity(), FinishHandler,
         }
     }
 
-    override fun selectionUpdate(selected: ArrayList<VList>) {}
+    override fun selectionUpdate(selected: ArrayList<VList?>) {}
     override fun cancel() {}
     inner class ViewPagerAdapter(manager: FragmentManager?) : FragmentPagerAdapter(
         manager!!

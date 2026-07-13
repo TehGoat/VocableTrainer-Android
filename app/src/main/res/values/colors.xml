@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bg_row_background">#fa315b</color>
-    <color name="colorWhite">#ffffff</color>
-    <color name="colorPrimary">#2196f3</color>
-    <color name="colorPrimaryDark">#1976d2</color>
+    <color name="color_white">#ffffff</color>
+    <color name="color_primary">#2196f3</color>
+    <color name="color_primary_dark">#1976d2</color>
     <color name="primary_light">#BBDEFB</color>
-    <color name="textColor">#ff000000</color>
-    <color name="colorAccent">#03a9f4</color>
-    <color name="textColorPrimary">#212121</color>
-    <color name="textColorSecondary">#757575</color>
+    <color name="text_color">#ff000000</color>
+    <color name="color_accent">#03a9f4</color>
+    <color name="text_color_primary">#212121</color>
+    <color name="text_color_secondary">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#D6D6D6</color>
     <color name="background_item">#F1F1F1</color>
     <color name="background_blank">#FFFFFF</color>
-    <color name="colorTabSelected">@color/colorWhite</color>
+    <color name="color_tab_selected">@color/color_white</color>
 
     <!-- Mainly for night theme color fixes-->
     <color name="dialogButtonTextColorFix">#ff4991cc</color>
 
-    <color name="toolbarBackground">@color/colorPrimary</color>
-    <color name="appBarcolorPrimaryDark">@color/colorPrimaryDark</color>
+    <color name="toolbarBackground">@color/color_primary</color>
+    <color name="appBarcolorPrimaryDark">@color/color_primary_dark</color>
+
+    <color name="background">#101826</color>
+    <color name="surface">#1D293B</color>
+    <color name="elevated_surface">#283549</color>
+    <color name="primary_accent">#4F61FF</color>
+    <color name="success_accent">#36B38C</color>
+    <color name="warning_accent">#E2AB2D</color>
+    <color name="secondary_accent">#7B59DC</color>
+    <color name="error_accent">#D65B4B</color>
+    <color name="info_accent">#4C99D4</color>
+    <color name="primary_text">#F5F7FA</color>
+    <color name="secondary_text">#B3BBC9</color>
+    <color name="disabled_text">#717B8C</color>
+    <color name="border">#3A4558</color>
 </resources>

@@ -13,37 +13,29 @@ import vocabletrainer.heinecke.aron.vocabletrainer.editor.ListActivity
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.ExImportActivity
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.Database
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.EdgeToEdgeUtils.Companion.handleEdgeToEdge
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.widget.VectorImageHelper
 import vocabletrainer.heinecke.aron.vocabletrainer.trainer.TrainerActivity
 import vocabletrainer.heinecke.aron.vocabletrainer.trainer.TrainerSettingsActivity
 
 class MainActivity : AppCompatActivity() {
-    var btnContinue: Button? = null
+    lateinit var btnContinue: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setTitle(R.string.app_name)
 
-        btnContinue = findViewById<Button?>(R.id.bLastSession)
-        val helper = VectorImageHelper(this, findViewById<View?>(android.R.id.content))
-        helper.initImageLeft(R.id.bLastSession, R.drawable.ic_play_arrow_white_24dp)
-        helper.initImageLeft(R.id.bTrainerEnter, R.drawable.ic_send_white_24dp)
-        helper.initImageLeft(R.id.bEditTable, R.drawable.ic_edit_white_24dp)
-        helper.initImageLeft(R.id.bAbout, R.drawable.ic_info_outline_white_24dp)
-        helper.initImageLeft(R.id.bExport, R.drawable.ic_file_upload_white_24dp)
-        helper.initImageLeft(R.id.bImport, R.drawable.ic_file_download_white_24dp)
+        btnContinue = findViewById(R.id.bLastSession)
 
         handleEdgeToEdge(findViewById(R.id.main_content))
     }
 
     override fun onResume() {
         super.onResume()
-        btnContinue!!.isEnabled = false
+        btnContinue.isEnabled = false
 
         lifecycleScope.launch(Dispatchers.IO) {
             val openSession = Database(baseContext).isSessionStored
-            runOnUiThread { btnContinue!!.isEnabled = openSession }
+            runOnUiThread { btnContinue.isEnabled = openSession }
         }
     }
 

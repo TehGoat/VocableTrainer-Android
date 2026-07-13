@@ -4,12 +4,12 @@
     <style name="BaseAppTheme" parent="Theme.MaterialComponents.DayNight">
         <!-- Customize your theme here. -->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <item name="android:textColorSecondary">@color/textColorSecondary</item>
-        <item name="android:textColor">@color/textColor</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="android:textColorPrimary">@color/text_color_primary</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary</item>
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:colorBackground">@color/background_item</item>
         <item name="android:windowBackground">@color/background_blank</item>
         <item name="android:borderlessButtonStyle">@style/BorderlessButton</item>
@@ -26,17 +26,17 @@
 
     <style name="NormalButton" parent="Widget.MaterialComponents.Button">
         <!-- don't do anything additionally, override on night theme -->
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="backgroundTint">@color/color_button</item>
+        <item name="android:textColor">@color/color_white</item>
+        <item name="backgroundTint">@color/elevated_surface</item>
     </style>
 
     <style name="BorderlessButton" parent="Widget.MaterialComponents.Button.TextButton">
         <!-- don't do anything additionally, override on night theme -->
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/color_accent</item>
     </style>
 
     <style name="CustomTabLayoutStyle" parent="Base.Widget.Design.TabLayout">
-        <item name="tabSelectedTextColor">@color/colorTabSelected</item>
+        <item name="tabSelectedTextColor">@color/color_tab_selected</item>
 <!--        <item name="tabIndicatorColor">@color/tab_indicator</item>-->
 <!--        <item name="tabTextAppearance">@style/CustomTabTexStyle</item>-->
     </style>
@@ -49,12 +49,12 @@
 
     <style name="AppTheme.Dialog" parent="Theme.AppCompat.DayNight.Dialog" >
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <item name="android:textColorSecondary">@color/textColorSecondary</item>
-        <item name="android:textColor">@color/textColor</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="android:textColorPrimary">@color/text_color_primary</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary</item>
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:colorBackground">@color/background_item</item>
         <item name="android:windowBackground">@color/background_blank</item>
         <item name="android:borderlessButtonStyle">@style/BorderlessButton</item>

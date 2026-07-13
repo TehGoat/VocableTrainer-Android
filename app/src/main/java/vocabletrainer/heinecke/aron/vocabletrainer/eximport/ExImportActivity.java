@@ -37,6 +37,7 @@ import java.io.ObjectOutputStream;
 import vocabletrainer.heinecke.aron.vocabletrainer.R;
 import vocabletrainer.heinecke.aron.vocabletrainer.activity.FragmentActivity;
 import vocabletrainer.heinecke.aron.vocabletrainer.activity.MainActivity;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.EdgeToEdgeUtils;
 import vocabletrainer.heinecke.aron.vocabletrainer.listpicker.ListPickerFragment;
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.CSVCustomFormat;
 
@@ -131,6 +132,7 @@ public class ExImportActivity extends FragmentActivity {
         Log.d(TAG,"onCreate");
 
         setContentView(R.layout.activity_expimp);
+        EdgeToEdgeUtils.Companion.handleEdgeToEdge(findViewById(R.id.main_content));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

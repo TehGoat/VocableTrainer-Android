@@ -31,7 +31,7 @@ class GenTableComparator
          * Name retriever
          */
         @JvmField
-        val retName: ValueRetriever<*, *> = object : ValueRetriever<VList?, String?>() {
+        val retName: ValueRetriever<VList?, String?> = object : ValueRetriever<VList?, String?>() {
             public override fun getV(obj: VList?): String? {
                 return obj?.name
             }
@@ -41,7 +41,7 @@ class GenTableComparator
          * A retriever
          */
         @JvmField
-        val retA: ValueRetriever<*, *> = object : ValueRetriever<VList?, String?>() {
+        val retA: ValueRetriever<VList?, String?> = object : ValueRetriever<VList?, String?>() {
             public override fun getV(obj: VList?): String? {
                 return obj?.nameA
             }
@@ -51,7 +51,7 @@ class GenTableComparator
          * B retriever
          */
         @JvmField
-        val retB: ValueRetriever<*, *> = object : ValueRetriever<VList?, String?>() {
+        val retB: ValueRetriever<VList?, String?> = object : ValueRetriever<VList?, String?>() {
             public override fun getV(obj: VList?): String? {
                 return obj?.nameB
             }

@@ -22,6 +22,7 @@ import vocabletrainer.heinecke.aron.vocabletrainer.activity.FragmentActivity;
 import vocabletrainer.heinecke.aron.vocabletrainer.activity.MainActivity;
 import vocabletrainer.heinecke.aron.vocabletrainer.dialog.ItemPickerDialog;
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.Database;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.EdgeToEdgeUtils;
 
 import static vocabletrainer.heinecke.aron.vocabletrainer.activity.MainActivity.PREFS_NAME;
 
@@ -63,6 +64,7 @@ public class TrainerActivity extends FragmentActivity implements TrainerModeFrag
         super.onCreate(savedInstanceState);
         Log.d(TAG,"oncreate1");
         setContentView(R.layout.activity_trainer);
+        EdgeToEdgeUtils.Companion.handleEdgeToEdge(findViewById(R.id.main_content));
         setTitle(R.string.Trainer_Title);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
