@@ -5,8 +5,9 @@ import android.net.Uri;
 
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.function.Function;
+
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.CSVCustomFormat;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Function;
 
 /**
  * ImportFetcher builder<br>
@@ -18,8 +19,8 @@ public class ImportFetcherBuilder {
     private ImportHandler handler;
     private Context context;
     private ImportFetcher.MessageProvider messageProvider;
-    private Function<Void,String> importCallback;
-    private Function<Void,String> cancelCallback;
+    private Function<String, Void> importCallback;
+    private Function<String, Void> cancelCallback;
     private MutableLiveData<Integer> progressHandle;
     private boolean logErrors = true;
 
@@ -53,12 +54,12 @@ public class ImportFetcherBuilder {
         return this;
     }
 
-    public ImportFetcherBuilder setImportCallback(Function<Void,String> importCallback) {
+    public ImportFetcherBuilder setImportCallback(Function<String, Void> importCallback) {
         this.importCallback = importCallback;
         return this;
     }
 
-    public ImportFetcherBuilder setCancelCallback(Function<Void,String> cancelCallback) {
+    public ImportFetcherBuilder setCancelCallback(Function<String, Void> cancelCallback) {
         this.cancelCallback = cancelCallback;
         return this;
     }

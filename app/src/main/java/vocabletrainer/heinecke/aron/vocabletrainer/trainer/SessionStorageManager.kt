@@ -3,8 +3,8 @@ package vocabletrainer.heinecke.aron.vocabletrainer.trainer
 import android.database.sqlite.SQLiteStatement
 import android.util.Log
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.Database
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VEntry
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VList
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VEntry
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VList
 import vocabletrainer.heinecke.aron.vocabletrainer.trainer.Trainer.TEST_MODE
 
 /**

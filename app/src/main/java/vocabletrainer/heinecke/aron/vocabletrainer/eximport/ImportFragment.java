@@ -37,10 +37,10 @@ import vocabletrainer.heinecke.aron.vocabletrainer.fragment.BaseFragment;
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.CSVCustomFormat;
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.Import.ImportFetcher;
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.Import.Importer;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VList;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VList;
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.StorageUtils;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Widget.CustomItemSelectedListener;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Widget.ViewCreation;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.widget.CustomItemSelectedListener;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.widget.ViewCreation;
 
 import static vocabletrainer.heinecke.aron.vocabletrainer.activity.MainActivity.PREFS_NAME;
 
@@ -263,28 +263,28 @@ public class ImportFragment extends BaseFragment implements VListEditorDialog.Li
      * @param id RadioButton
      */
     private void updateImportListModeByButtonID(@IdRes int id){
-        switch (id) {
-            case R.id.radio_add_s:
-            case R.id.radio_add_m:
-            case R.id.radio_merge_r:
-                importListMode = Importer.IMPORT_LIST_MODE.ADD;
-                break;
-            case R.id.radio_create_s:
-            case R.id.radio_create_r:
-                importListMode = Importer.IMPORT_LIST_MODE.CREATE;
-                break;
-            case R.id.radio_replace_s:
-            case R.id.radio_replace_m:
-                importListMode = Importer.IMPORT_LIST_MODE.REPLACE;
-                break;
-            case R.id.radio_ignore_m:
-                importListMode = Importer.IMPORT_LIST_MODE.IGNORE;
-                break;
-            default:
-                Log.wtf(TAG,"invalid id: "+id);
-            case -1: // nothing selected
-                importListMode = null;
-                break;
+        if (
+                id == R.id.radio_add_s ||
+                id == R.id.radio_add_m ||
+                id == R.id.radio_merge_r
+        ) {
+            importListMode = Importer.IMPORT_LIST_MODE.ADD;
+        } else if (
+                id == R.id.radio_create_s ||
+                        id == R.id.radio_create_r
+        ) {
+            importListMode = Importer.IMPORT_LIST_MODE.CREATE;
+        } else if (
+                id == R.id.radio_replace_s ||
+                        id == R.id.radio_replace_m
+        ) {
+            importListMode = Importer.IMPORT_LIST_MODE.REPLACE;
+        } else if (
+                id == R.id.radio_ignore_m
+        ) {
+            importListMode = Importer.IMPORT_LIST_MODE.IGNORE;
+        } else {
+            importListMode = null;
         }
     }
 

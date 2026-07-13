@@ -12,12 +12,12 @@ import java.io.FileNotFoundException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.List;
+import java.util.function.Function;
 
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.ExportFragment;
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.Database;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Function;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VEntry;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VList;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VEntry;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VList;
 
 import static vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.CSVHeaders.CSV_METADATA_COMMENT;
 import static vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.CSVHeaders.CSV_METADATA_START;
@@ -31,8 +31,8 @@ public class Exporter extends AsyncTask<Integer, Integer, String> {
     private final ExportFragment.ExportStorage es;
     private final Database db;
     private final MutableLiveData<Integer> progressHandle;
-    private final Function<Void,String> exportCallback;
-    private final Function<Void,String> cancelCallback;
+    private final Function<String, Void> exportCallback;
+    private final Function<String, Void> cancelCallback;
     private final MutableLiveData<String> exceptionHandle;
     private OutputStream out;
 
@@ -42,7 +42,7 @@ public class Exporter extends AsyncTask<Integer, Integer, String> {
      * @param es
      */
     public Exporter(ExportFragment.ExportStorage es, MutableLiveData<Integer> progressHandle,
-            Function<Void,String> exportCallback,Function<Void,String> cancelCallback, Context context,
+            Function<String, Void> exportCallback,Function<String, Void> cancelCallback, Context context,
                     MutableLiveData<String> exceptionHandle) {
         this.es = es;
         this.progressHandle = progressHandle;
@@ -119,8 +119,8 @@ public class Exporter extends AsyncTask<Integer, Integer, String> {
     @Override
     protected void onPostExecute(String result) {
          if(isCancelled())
-             cancelCallback.function(result);
+             cancelCallback.apply(result);
          else
-             exportCallback.function(result);
+             exportCallback.apply(result);
     }
 }

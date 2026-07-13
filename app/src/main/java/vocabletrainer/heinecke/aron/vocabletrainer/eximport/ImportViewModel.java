@@ -13,14 +13,14 @@ import androidx.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.CSVCustomFormat;
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.Import.ImportFetcher;
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.Import.ImportFetcherBuilder;
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.Import.Importer;
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.Import.PreviewParser;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Function;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VEntry;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VEntry;
 
 import static android.os.AsyncTask.Status.RUNNING;
 
@@ -77,7 +77,7 @@ public class ImportViewModel extends ViewModel {
             return;
         //CSVCustomFormat format = getFormatSelected();
         final PreviewParser dataHandler = new PreviewParser(new ArrayList<>(20));
-        Function<Void,String> callback = param -> {
+        Function<String, Void> callback = param -> {
             setMultiList(dataHandler.isMultiList());
             setRawData(dataHandler.isRawData());
             setPreviewParser(dataHandler);
@@ -85,7 +85,7 @@ public class ImportViewModel extends ViewModel {
             importLog.setValue(new LogData(param,true)); // show logged exceptions during preview parsing
             return null;
         };
-        Function<Void,String> callbackCancel = param -> {
+        Function<String, Void> callbackCancel = param -> {
             resetPreviewData();
             updateIsReparsing(false);
             cancelPreview.setValue(false);
@@ -111,7 +111,7 @@ public class ImportViewModel extends ViewModel {
               @NonNull Context context,@NonNull ImportFetcher.MessageProvider mp){
         if(verifyNoParsersRunning())
             return;
-        Function<Void,String> callback = param -> {
+        Function<String, Void> callback = param -> {
             importing.setValue(false);
             importLog.setValue(new LogData(param,false));
             cancelImport.setValue(false);

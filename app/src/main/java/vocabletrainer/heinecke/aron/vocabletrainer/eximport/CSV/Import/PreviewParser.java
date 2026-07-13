@@ -3,7 +3,7 @@ package vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.Import;
 import java.util.ArrayList;
 import java.util.List;
 
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VEntry;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VEntry;
 
 import static vocabletrainer.heinecke.aron.vocabletrainer.lib.Database.ID_RESERVED_SKIP;
 

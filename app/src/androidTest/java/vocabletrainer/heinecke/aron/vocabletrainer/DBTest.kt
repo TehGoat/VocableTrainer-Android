@@ -8,7 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.*
 import org.junit.runner.RunWith
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.Database
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.*
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.*
 import vocabletrainer.heinecke.aron.vocabletrainer.trainer.SessionStorageManager
 import vocabletrainer.heinecke.aron.vocabletrainer.trainer.Trainer
 import vocabletrainer.heinecke.aron.vocabletrainer.trainer.TrainerSettings

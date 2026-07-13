@@ -3,10 +3,10 @@ package vocabletrainer.heinecke.aron.vocabletrainer.trainer;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VEntry;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VEntry;
 
-import static vocabletrainer.heinecke.aron.vocabletrainer.lib.ParcableTools.readParcableBool;
-import static vocabletrainer.heinecke.aron.vocabletrainer.lib.ParcableTools.writeParcableBool;
+import static vocabletrainer.heinecke.aron.vocabletrainer.lib.ParsableTools.readParsableBool;
+import static vocabletrainer.heinecke.aron.vocabletrainer.lib.ParsableTools.writeParsableBool;
 
 /**
  * Trainer settings obj
@@ -77,13 +77,13 @@ public class TrainerSettings implements Parcelable {
     protected TrainerSettings(Parcel in){
         this.timesToSolve = in.readInt();
         this.mode = Trainer.TEST_MODE.fromInt(in.readInt());
-        this.allowTips = readParcableBool(in);
+        this.allowTips = readParsableBool(in);
         this.tipsGiven = in.readInt();
         this.timesFailed = in.readInt();
-        this.caseSensitive = readParcableBool(in);
+        this.caseSensitive = readParsableBool(in);
         this.questioning = in.readParcelable(VEntry.class.getClassLoader());
-        this.trimSpaces = readParcableBool(in);
-        this.additionAuto = readParcableBool(in);
+        this.trimSpaces = readParsableBool(in);
+        this.additionAuto = readParsableBool(in);
     }
 
     public static final Creator<TrainerSettings> CREATOR = new Creator<TrainerSettings>() {
@@ -107,12 +107,12 @@ public class TrainerSettings implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(timesToSolve);
         parcel.writeInt(mode.getValue());
-        writeParcableBool(parcel,allowTips);
+        writeParsableBool(parcel,allowTips);
         parcel.writeInt(tipsGiven);
         parcel.writeInt(timesFailed);
-        writeParcableBool(parcel,caseSensitive);
+        writeParsableBool(parcel,caseSensitive);
         parcel.writeParcelable(questioning,0);
-        writeParcableBool(parcel,trimSpaces);
-        writeParcableBool(parcel,additionAuto);
+        writeParsableBool(parcel,trimSpaces);
+        writeParsableBool(parcel,additionAuto);
     }
 }

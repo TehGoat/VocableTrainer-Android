@@ -26,8 +26,8 @@ import java.util.Objects;
 import vocabletrainer.heinecke.aron.vocabletrainer.R;
 import vocabletrainer.heinecke.aron.vocabletrainer.activity.FragmentActivity;
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.CSVCustomFormat;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Widget.CharacterPreference;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Widget.CharacterPreferenceDialog;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.widget.CharacterPreference;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.widget.CharacterPreferenceDialog;
 
 /**
  * Fragment for custom cFormat preferences<br>
@@ -268,15 +268,15 @@ public class FormatFragment extends PreferenceFragmentCompat implements Fragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.fResetDefault:
-                Log.d(TAG,"reset to default");
-                loadPrefsFromCSVFormat(CSVCustomFormat.DEFAULT);
-                return true;
-            case R.id.fResetPrev:
-                Log.d(TAG,"reset to previous" + (previousFormat != null));
-                loadPrefsFromCSVFormat(previousFormat);
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.fResetDefault) {
+            Log.d(TAG, "reset to default");
+            loadPrefsFromCSVFormat(CSVCustomFormat.DEFAULT);
+            return true;
+        } else if (itemId == R.id.fResetPrev) {
+            Log.d(TAG, "reset to previous" + (previousFormat != null));
+            loadPrefsFromCSVFormat(previousFormat);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -293,7 +293,6 @@ public class FormatFragment extends PreferenceFragmentCompat implements Fragment
 
         DialogFragment f = null;
         if (preference instanceof CharacterPreference) {
-            //f = EditTextPreferenceDialog.newInstance(preference.getKey(),lengthFilter);
             f = CharacterPreferenceDialog.newInstance(preference);
         } else {
             super.onDisplayPreferenceDialog(preference);

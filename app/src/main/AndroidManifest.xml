@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="vocabletrainer.heinecke.aron.vocabletrainer">
-    <uses-permission android:name="android.permission.INTERNET" />
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -38,7 +36,6 @@
             android:name=".activity.AboutActivity"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.PermActivity" />
         <activity
             android:name=".eximport.ExImportActivity"
             android:label="@string/title_activity_format"

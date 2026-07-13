@@ -7,7 +7,7 @@
     android:theme="@style/AppTheme"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context="vocabletrainer.heinecke.aron.vocabletrainer.lib.Widget.CharacterPreference">
+    tools:context="vocabletrainer.heinecke.aron.vocabletrainer.lib.widget.CharacterPreference">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tCharInputLayout"

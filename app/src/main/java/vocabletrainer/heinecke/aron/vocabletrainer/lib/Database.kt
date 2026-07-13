@@ -13,7 +13,7 @@ import androidx.lifecycle.LiveData
 import java.sql.Date
 import java.sql.SQLException
 import java.util.*
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.*
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.*
 import vocabletrainer.heinecke.aron.vocabletrainer.trainer.TrainerSettings
 
 

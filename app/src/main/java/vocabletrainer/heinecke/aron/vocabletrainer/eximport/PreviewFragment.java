@@ -14,9 +14,8 @@ import java.util.ArrayList;
 
 import vocabletrainer.heinecke.aron.vocabletrainer.R;
 import vocabletrainer.heinecke.aron.vocabletrainer.fragment.BaseFragment;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Adapter.EntryListAdapter;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VEntry;
-import vocabletrainer.heinecke.aron.vocabletrainer.eximport.ImportViewModel;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.adapter.EntryListAdapter;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VEntry;
 
 import static vocabletrainer.heinecke.aron.vocabletrainer.lib.Database.ID_RESERVED_SKIP;
 

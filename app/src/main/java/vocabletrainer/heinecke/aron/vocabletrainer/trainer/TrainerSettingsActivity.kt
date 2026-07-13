@@ -16,8 +16,8 @@ import vocabletrainer.heinecke.aron.vocabletrainer.activity.FragmentActivity
 import vocabletrainer.heinecke.aron.vocabletrainer.listpicker.ListPickerFragment
 import vocabletrainer.heinecke.aron.vocabletrainer.trainer.TrainerSettingsFragment.FinishHandler
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.Database
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VList
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.ViewModel.ListPickerViewModel
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VList
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.view_model.ListPickerViewModel
 
 /**
  * Trainer settings activity

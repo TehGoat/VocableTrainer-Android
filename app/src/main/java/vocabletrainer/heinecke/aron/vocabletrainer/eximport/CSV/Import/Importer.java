@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.Database;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VEntry;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VList;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VEntry;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VList;
 
 import static android.content.ContentValues.TAG;
 

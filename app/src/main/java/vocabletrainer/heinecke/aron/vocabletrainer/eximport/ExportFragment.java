@@ -30,18 +30,18 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import vocabletrainer.heinecke.aron.vocabletrainer.R;
-import vocabletrainer.heinecke.aron.vocabletrainer.fragment.PagerFragment;
+import vocabletrainer.heinecke.aron.vocabletrainer.fragment.BaseFragment;
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.CSVCustomFormat;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VList;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VList;
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.StorageUtils;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.ViewModel.ListPickerViewModel;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.view_model.ListPickerViewModel;
 
 import static vocabletrainer.heinecke.aron.vocabletrainer.activity.MainActivity.PREFS_NAME;
 
 /**
  * Exporter fragment
  */
-public class ExportFragment extends PagerFragment {
+public class ExportFragment extends BaseFragment {
 
     private static final String P_KEY_B_EXP_TBL_META = "export_tbl_meta";
     private static final String P_KEY_B_EXP_TBL_MULTI = "export_tbl_multi";
@@ -319,11 +319,11 @@ public class ExportFragment extends PagerFragment {
     }
 
     @Override
-    protected void onFragmentVisible() {
-        super.onFragmentVisible();
-        onResume();
+    public void onResume() {
+        super.onResume();
         checkInputOk();
     }
+
     /**
      * Exporter storage class
      */

@@ -8,8 +8,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.function.Function;
+
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.Exporter;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Function;
 
 /**
  * Export ViewModel containinig relevant data & handles background tasking
@@ -116,13 +117,13 @@ public class ExportViewModel extends ViewModel {
             return;
         }
         //post export
-        Function<Void,String> callback = param -> {
+        Function<String, Void> callback = param -> {
             exporting.setValue(false);
             exportFinished.setValue(true);
             exportListAmount = 0;
             return null;
         };
-        Function<Void,String> callbackCancel = param -> {
+        Function<String, Void> callbackCancel = param -> {
             exporting.setValue(false);
             exportListAmount = 0;
             cancelExport.setValue(false);

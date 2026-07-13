@@ -19,11 +19,11 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.function.Function;
 
 import vocabletrainer.heinecke.aron.vocabletrainer.R;
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.CSVCustomFormat;
 import vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.MultiMeaningHandler;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Function;
 
 import static vocabletrainer.heinecke.aron.vocabletrainer.eximport.CSV.CSVHeaders.CSV_METADATA_START;
 
@@ -46,8 +46,8 @@ public class ImportFetcher extends AsyncTask<Integer, Integer, String> {
     private final ImportHandler handler;
     private final MutableLiveData<Integer> progressHandle;
     private final MessageProvider messageProvider;
-    private final Function<Void,String> importCallback;
-    private final Function<Void,String> cancelCallback;
+    private final Function<String, Void> importCallback;
+    private final Function<String, Void> cancelCallback;
     private final boolean logEverything;
     private long lastUpdate = 0;
     private final StringBuilder log;
@@ -69,8 +69,8 @@ public class ImportFetcher extends AsyncTask<Integer, Integer, String> {
      */
     ImportFetcher(final CSVCustomFormat cformat, final Uri source, final ImportHandler handler,
                   final MutableLiveData<Integer> progressHandle,
-                  final MessageProvider messageProvider, final Function<Void,String> importCallback,
-                  final boolean logEverything, @Nullable final Function<Void,String> cancelCallback,
+                  final MessageProvider messageProvider, final Function<String, Void> importCallback,
+                  final boolean logEverything, @Nullable final Function<String, Void> cancelCallback,
                   final Context context) {
         this.source = source;
         this.cformat = cformat;
@@ -99,8 +99,9 @@ public class ImportFetcher extends AsyncTask<Integer, Integer, String> {
     protected void onCancelled(String s) {
         super.onCancelled(s);
         try{
-            if(cancelCallback != null)
-                cancelCallback.function(s);
+            if(cancelCallback != null) {
+                cancelCallback.apply(s);
+            }
         } catch (Exception e){
             Log.e(TAG,"cancelCallback crash",e);
         }
@@ -110,7 +111,7 @@ public class ImportFetcher extends AsyncTask<Integer, Integer, String> {
     protected void onPostExecute(String s) {
         try {
             if(importCallback != null)
-                importCallback.function(s);
+                importCallback.apply(s);
         } catch (Exception e){
             Log.e(TAG,"importCallback crash",e);
         }

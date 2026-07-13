@@ -20,7 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import vocabletrainer.heinecke.aron.vocabletrainer.R;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VList;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VList;
 
 /**
  * Recycler adapter for VList recycler with optional multi selection

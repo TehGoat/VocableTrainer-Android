@@ -29,24 +29,23 @@ import java.util.ArrayList;
 import vocabletrainer.heinecke.aron.vocabletrainer.R;
 import vocabletrainer.heinecke.aron.vocabletrainer.editor.EditorActivity;
 import vocabletrainer.heinecke.aron.vocabletrainer.dialog.ItemPickerDialog;
-import vocabletrainer.heinecke.aron.vocabletrainer.fragment.PagerFragment;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Comparator.GenTableComparator;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Comparator.GenericComparator;
+import vocabletrainer.heinecke.aron.vocabletrainer.fragment.BaseFragment;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.comparator.GenTableComparator;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.comparator.GenericComparator;
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.Database;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VList;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.ViewModel.ListPickerViewModel;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VList;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.view_model.ListPickerViewModel;
 
 import static vocabletrainer.heinecke.aron.vocabletrainer.activity.MainActivity.PREFS_NAME;
 import static vocabletrainer.heinecke.aron.vocabletrainer.lib.Database.ID_RESERVED_SKIP;
 
-import org.acra.ACRA;
 
 /**
  * List selector fragment<br>
  *     This can be used externally in other fragments<br>
  *     Requires a toolbar
  */
-public class ListPickerFragment extends PagerFragment implements ListRecyclerAdapter.ItemClickListener,
+public class ListPickerFragment extends BaseFragment implements ListRecyclerAdapter.ItemClickListener,
         ListTouchHelper.SwipeListener, ItemPickerDialog.ItemPickerHandler {
     public static final String TAG = "ListPickerFragment";
     private static final String P_KEY_LA_SORT = "LA_sorting";
@@ -71,11 +70,6 @@ public class ListPickerFragment extends PagerFragment implements ListRecyclerAda
     private ListPickerViewModel listPickerViewModel;
     private ItemPickerDialog sortingDialog;
     private FloatingActionButton bNewList;
-
-    @Override
-    protected void onFragmentInvisible() {
-        //listener.selectionUpdate(getSelectedItems());
-    }
 
     @Override
     public void onItemClick(View view, int position) {
@@ -241,7 +235,6 @@ public class ListPickerFragment extends PagerFragment implements ListRecyclerAda
         bNewList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ACRA.getErrorReporter().putCustomData("creatingList","true");
                 Intent myIntent = new Intent(getActivity(), EditorActivity.class);
                 myIntent.putExtra(EditorActivity.PARAM_NEW_TABLE, true);
                 startActivityForResult(myIntent,CODE_NEW_LIST);
@@ -294,16 +287,16 @@ public class ListPickerFragment extends PagerFragment implements ListRecyclerAda
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.lMenu_sort:
-                sortingDialog = ItemPickerDialog.newInstance(R.array.sort_lists,R.string.GEN_Sort);
-                sortingDialog.setItemPickerHandler(this);
-                sortingDialog.show(getACActivity().getSupportFragmentManager(),P_KEY_SORTING_DIALOG);
-                return true;
-            case R.id.lMenu_select_all:
-                listPickerViewModel.setSelectAll(!listPickerViewModel.isSelectAll());
-                adapter.selectAll(listPickerViewModel.isSelectAll());
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.lMenu_sort) {
+            sortingDialog = ItemPickerDialog.newInstance(R.array.sort_lists, R.string.GEN_Sort);
+            sortingDialog.setItemPickerHandler(this);
+            sortingDialog.show(getACActivity().getSupportFragmentManager(), P_KEY_SORTING_DIALOG);
+            return true;
+        } else if (itemId == R.id.lMenu_select_all) {
+            listPickerViewModel.setSelectAll(!listPickerViewModel.isSelectAll());
+            adapter.selectAll(listPickerViewModel.isSelectAll());
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

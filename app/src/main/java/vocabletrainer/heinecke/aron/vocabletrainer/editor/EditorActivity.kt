@@ -18,20 +18,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import org.acra.ACRA
 import vocabletrainer.heinecke.aron.vocabletrainer.R
 import vocabletrainer.heinecke.aron.vocabletrainer.activity.MainActivity
 import vocabletrainer.heinecke.aron.vocabletrainer.dialog.ItemPickerDialog
 import vocabletrainer.heinecke.aron.vocabletrainer.dialog.ItemPickerDialog.ItemPickerHandler
 import vocabletrainer.heinecke.aron.vocabletrainer.editor.VEntryEditorDialog.EditorDialogDataProvider
 import vocabletrainer.heinecke.aron.vocabletrainer.editor.VListEditorDialog.ListEditorDataProvider
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Adapter.EntryListAdapter
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Comparator.GenEntryComparator
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.adapter.EntryListAdapter
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.comparator.GenEntryComparator
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.Database
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VEntry
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VList
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VList.Companion.isIDValid
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.EdgeToEdgeUtils.Companion.handleEdgeToEdge
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VEntry
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VList
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VList.Companion.isIDValid
 import java.util.*
+import androidx.core.content.edit
 
 /**
  * List editor activity
@@ -39,7 +40,7 @@ import java.util.*
 class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditorDataProvider,
     ItemPickerHandler {
     private var list: VList? = null
-    private var entries: ArrayList<VEntry>? = null
+    private var entries: MutableList<VEntry>? = null
     private var adapter: EntryListAdapter? = null
     private var listView: ListView? = null
     private lateinit var db: Database
@@ -56,11 +57,15 @@ class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditor
     private var editPosition: Int =
         (Database.MIN_ID_TRESHOLD - 1).toInt() // store position for viewport change, shared object
     private var editorEntry: VEntry? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate")
         entries = ArrayList()
         setContentView(R.layout.activity_editor)
+
+        handleEdgeToEdge(findViewById(R.id.constraintLayout))
+
         db = Database(baseContext)
         val ab = supportActionBar
         ab?.setDisplayHomeAsUpEnabled(true)
@@ -85,7 +90,7 @@ class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditor
         )
         val intent = intent
         val bNewEntry = findViewById<FloatingActionButton>(R.id.bEditorNewEntry)
-        bNewEntry.setOnClickListener { v: View? -> addEntry() }
+        bNewEntry.setOnClickListener { _: View? -> addEntry() }
 
         // setup listview
         initListView()
@@ -95,7 +100,7 @@ class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditor
 
         // handle passed params
         var newTable = intent.getBooleanExtra(PARAM_NEW_TABLE, false)
-        ACRA.errorReporter.putCustomData("hasSavedInstanceState","$savedInstanceState");
+
         if (savedInstanceState != null) {
             newTable = savedInstanceState.getBoolean(PARAM_NEW_TABLE, false)
             listEditorDialog = supportFragmentManager.getFragment(
@@ -103,19 +108,20 @@ class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditor
                 VListEditorDialog.TAG
             ) as VListEditorDialog?
         }
-        ACRA.errorReporter.putCustomData("newTable","$newTable")
+
         if (newTable) {
-            list = if (savedInstanceState != null) // viewport changed during creation phase
-                savedInstanceState.getParcelable(PARAM_TABLE) else VList.blank(
-                getString(R.string.Editor_Hint_Column_A), getString(
+            list = if (savedInstanceState != null) { // viewport changed during creation phase
+                savedInstanceState.getParcelable(PARAM_TABLE)
+            } else {
+                VList.blank(getString(R.string.Editor_Hint_Column_A), getString(
                     R.string.Editor_Hint_Column_B
-                ), getString(R.string.Editor_Hint_List_Name)
-            )
+                ), getString(R.string.Editor_Hint_List_Name))
+            }
             Log.d(TAG, "new list mode")
             if (savedInstanceState == null) showTableInfoDialog()
         } else {
             val tbl: VList? = intent.getParcelableExtra(PARAM_TABLE)
-            ACRA.errorReporter.putCustomData("intentHasList","$tbl")
+
             if (tbl != null) {
                 list = tbl
                 // do not call updateColumnNames as we've to wait for onCreateOptionsMenu, calling it
@@ -124,9 +130,7 @@ class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditor
                 Log.d(TAG, "edit list mode")
             }
         }
-        if (list == null) {
-            ACRA.errorReporter.handleException(throw Throwable("List for editor is null"))
-        }
+
         if (listEditorDialog != null) setListEditorActions()
         if (savedInstanceState != null) {
             editorDialog = supportFragmentManager.getFragment(
@@ -176,7 +180,11 @@ class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditor
      * Handles list column name changes
      */
     private fun updateColumnNames() {
-        adapter!!.setTableData(list)
+        if (list == null) {
+            return
+        }
+
+        adapter!!.setTableData(list!!)
     }
 
     /**
@@ -250,19 +258,19 @@ class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditor
         val ab = supportActionBar
         ab?.setDisplayHomeAsUpEnabled(true)
         listView = findViewById(R.id.listviewEditor)
-        entries = ArrayList()
-        this@EditorActivity.adapter = EntryListAdapter(this@EditorActivity, entries)
+        entries = mutableListOf()
+        this@EditorActivity.adapter = EntryListAdapter(this@EditorActivity, entries!!)
         listView!!.run {
             isLongClickable = true
             adapter = this@EditorActivity.adapter
             onItemClickListener =
-                OnItemClickListener { parent: AdapterView<*>?, view: View?, pos: Int, id: Long ->
+                OnItemClickListener { _: AdapterView<*>?, _: View?, pos: Int, _: Long ->
                     showEntryEditDialog(
                         adapter!!.getItem(pos) as VEntry, pos, false
                     )
                 }
             onItemLongClickListener =
-                OnItemLongClickListener { arg0: AdapterView<*>?, arg1: View?, pos: Int, id: Long ->
+                OnItemLongClickListener { _: AdapterView<*>?, _: View?, pos: Int, _: Long ->
                     showEntryDeleteDialog(
                         adapter!!.getItem(pos) as VEntry, pos
                     )
@@ -294,13 +302,13 @@ class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditor
                 "${getString(R.string.Editor_Diag_delete_MSG_part)}\n %s %s %s", entry.aString, entry.bString, entry.tip
             )
         )
-        delDiag.setPositiveButton(R.string.Editor_Diag_delete_btn_OK) { dialog: DialogInterface?, whichButton: Int ->
+        delDiag.setPositiveButton(R.string.Editor_Diag_delete_btn_OK) { _: DialogInterface?, _: Int ->
             deleteEntry(
                 position,
                 entry
             )
         }
-        delDiag.setNegativeButton(R.string.Editor_Diag_delete_btn_CANCEL) { dialog: DialogInterface?, whichButton: Int ->
+        delDiag.setNegativeButton(R.string.Editor_Diag_delete_btn_CANCEL) { _: DialogInterface?, _: Int ->
             Log.d(
                 TAG, "canceled"
             )
@@ -317,7 +325,7 @@ class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditor
         adapter!!.remove(entry)
         val snackbar = Snackbar
             .make(listView!!, R.string.Editor_Entry_Deleted_Message, Snackbar.LENGTH_LONG)
-            .setAction(R.string.GEN_Undo) { view: View? ->
+            .setAction(R.string.GEN_Undo) { _: View? ->
                 adapter!!.addEntryRendered(
                     entry,
                     deletedPosition
@@ -374,11 +382,11 @@ class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditor
      * Setup editor dialog actions
      */
     private fun setEditorDialogActions() {
-        editorDialog!!.setOkAction { e: VEntry? ->
+        editorDialog!!.setOkAction { _: VEntry? ->
             saveEdit()
             null
         }
-        editorDialog!!.setCancelAction { e: VEntry? ->
+        editorDialog!!.setCancelAction { _: VEntry? ->
             val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.toggleSoftInput(0, 0)
             null
@@ -401,12 +409,12 @@ class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditor
                 intent.putExtra(PARAM_TABLE, list)
                 title = list!!.name
                 updateColumnNames()
-            } catch (e: SQLException) {
+            } catch (_: SQLException) {
                 Toast.makeText(
                     this, "Unable to save list!",
                     Toast.LENGTH_LONG
                 ).show()
-                ACRA.errorReporter.handleException(e)
+
                 finish() // TODO: is this the right place ?
             }
             null
@@ -456,13 +464,9 @@ class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditor
     override fun onStop() {
         super.onStop()
         val settings = getSharedPreferences(MainActivity.PREFS_NAME, 0)
-        val editor = settings.edit()
-        editor.putInt(P_KEY_EA_SORT, sortSetting)
-        editor.apply()
-    }
-
-    override fun getEditVEntry(): VEntry {
-        return editorEntry!!
+        settings.edit {
+            putInt(P_KEY_EA_SORT, sortSetting)
+        }
     }
 
     override fun getList(): VList {
@@ -473,6 +477,9 @@ class EditorActivity : AppCompatActivity(), EditorDialogDataProvider, ListEditor
         sortSetting = position
         updateComp()
     }
+
+    override val editVEntry: VEntry
+        get() = editorEntry!!
 
     companion object {
         /**

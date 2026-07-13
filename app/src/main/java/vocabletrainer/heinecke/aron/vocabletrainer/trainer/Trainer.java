@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Random;
 
 import vocabletrainer.heinecke.aron.vocabletrainer.lib.Database;
-import vocabletrainer.heinecke.aron.vocabletrainer.lib.Storage.VEntry;
+import vocabletrainer.heinecke.aron.vocabletrainer.lib.storage.VEntry;
 
-import static vocabletrainer.heinecke.aron.vocabletrainer.lib.ParcableTools.readParcableBool;
-import static vocabletrainer.heinecke.aron.vocabletrainer.lib.ParcableTools.writeParcableBool;
+import static vocabletrainer.heinecke.aron.vocabletrainer.lib.ParsableTools.readParsableBool;
+import static vocabletrainer.heinecke.aron.vocabletrainer.lib.ParsableTools.writeParsableBool;
 
 /**
  * Trainer class
@@ -464,10 +464,10 @@ public class Trainer implements Parcelable {
         total = in.readInt();
         timesToSolve = in.readInt();
         timesShowedSolution = in.readInt();
-        showedSolution = readParcableBool(in);
-        showedTip = readParcableBool(in);
+        showedSolution = readParsableBool(in);
+        showedTip = readParsableBool(in);
         settings = in.readParcelable(TrainerSettings.class.getClassLoader());
-        firstTimeVocLoad = readParcableBool(in);
+        firstTimeVocLoad = readParsableBool(in);
         lastAddition = in.readString();
     }
 
@@ -483,12 +483,12 @@ public class Trainer implements Parcelable {
         parcel.writeInt(failed);
         parcel.writeInt(timesToSolve);
         parcel.writeInt(timesShowedSolution);
-        writeParcableBool(parcel,showedSolution);
-        writeParcableBool(parcel,showedTip);
+        writeParsableBool(parcel,showedSolution);
+        writeParsableBool(parcel,showedTip);
         parcel.writeParcelable(settings,0);
         // ssm
         // db
-        writeParcableBool(parcel, firstTimeVocLoad);
+        writeParsableBool(parcel, firstTimeVocLoad);
         parcel.writeString(lastAddition);
     }
 
